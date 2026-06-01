@@ -1,0 +1,1170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Primavera Barcelona 2026 Personal Planner</title>
+  <style>
+    :root {
+      --ink: #161616;
+      --muted: #62605b;
+      --paper: #fffaf2;
+      --line: #26231f;
+      --pink: #ff7bac;
+      --coral: #ff6b36;
+      --blue: #6aa9ff;
+      --green: #b6e44d;
+      --yellow: #ffe76a;
+      --lav: #bca7ff;
+      --shadow: 0 18px 50px rgba(24, 22, 18, .15);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(110deg, rgba(255, 123, 172, .18), transparent 32%),
+        linear-gradient(250deg, rgba(106, 169, 255, .18), transparent 34%),
+        var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.45;
+    }
+
+    a { color: inherit; }
+    button, input, select { font: inherit; }
+
+    .shell {
+      width: min(1240px, calc(100% - 28px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      min-height: 82vh;
+      display: grid;
+      align-items: end;
+      padding: 28px 0 36px;
+      border-bottom: 2px solid var(--line);
+      background:
+        linear-gradient(rgba(255,250,242,.08), rgba(255,250,242,.90)),
+        url("https://assets.primaverasound.com/psweb/3eciwrzjib81k5cecvyw_1779189156679.png") center 42% / cover no-repeat;
+    }
+
+    .nav {
+      position: fixed;
+      z-index: 20;
+      top: 14px;
+      left: 50%;
+      width: min(980px, calc(100% - 28px));
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 9px;
+      border: 2px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 242, .88);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 8px 26px rgba(0,0,0,.12);
+    }
+
+    .brand {
+      padding: 5px 14px;
+      border-radius: 999px;
+      background: var(--ink);
+      color: white;
+      font-weight: 900;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .nav-links a {
+      display: block;
+      padding: 7px 11px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover { background: rgba(22,22,22,.08); color: var(--ink); }
+
+    .hero-copy {
+      max-width: 920px;
+      padding-top: 18vh;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      padding: 7px 11px;
+      border: 2px solid var(--line);
+      border-radius: 999px;
+      background: var(--yellow);
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+
+    h1 {
+      margin: 18px 0 12px;
+      max-width: 880px;
+      font-size: clamp(44px, 8vw, 112px);
+      line-height: .86;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .hero p {
+      max-width: 720px;
+      margin: 0;
+      font-size: clamp(18px, 2vw, 25px);
+      font-weight: 700;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .action {
+      border: 2px solid var(--line);
+      border-radius: 999px;
+      background: white;
+      padding: 12px 16px;
+      text-decoration: none;
+      font-weight: 900;
+      box-shadow: 4px 5px 0 var(--line);
+    }
+
+    .action.primary { background: var(--coral); color: white; }
+
+    section {
+      padding: 54px 0;
+      border-bottom: 2px solid var(--line);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 54px);
+      line-height: .95;
+      text-transform: uppercase;
+    }
+
+    .section-head p {
+      max-width: 520px;
+      margin: 0;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .chip, .day-btn {
+      border: 2px solid var(--line);
+      border-radius: 999px;
+      background: white;
+      color: var(--ink);
+      padding: 9px 13px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .chip[aria-pressed="true"], .day-btn[aria-selected="true"] {
+      background: var(--ink);
+      color: white;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+    }
+
+    .panel {
+      border: 2px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255,255,255,.78);
+      box-shadow: var(--shadow);
+    }
+
+    .summary-card {
+      min-height: 150px;
+      padding: 18px;
+      grid-column: span 3;
+    }
+
+    .summary-card strong {
+      display: block;
+      font-size: 34px;
+      line-height: 1;
+    }
+
+    .summary-card span {
+      display: block;
+      margin-top: 10px;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .timeline-wrap {
+      overflow: hidden;
+    }
+
+    .day-panel { display: none; }
+    .day-panel.active { display: block; }
+
+    .day-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px 18px;
+      border-bottom: 2px solid var(--line);
+      background: var(--green);
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 0;
+    }
+
+    .slot {
+      display: grid;
+      grid-template-columns: 106px 1fr 180px;
+      gap: 14px;
+      padding: 16px 18px;
+      border-bottom: 1px solid rgba(22,22,22,.2);
+      align-items: start;
+    }
+
+    .slot:last-child { border-bottom: 0; }
+
+    .time {
+      font-size: 22px;
+      font-weight: 950;
+      line-height: 1;
+    }
+
+    .time small {
+      display: block;
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .artist {
+      margin: 0 0 5px;
+      font-size: 22px;
+      line-height: 1.05;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .tag {
+      display: inline-flex;
+      padding: 4px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: white;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .tag.conflict { background: var(--pink); color: white; }
+    .tag.walk { background: var(--blue); }
+    .tag.food { background: var(--yellow); }
+    .tag.priority { background: var(--ink); color: white; }
+
+    .slot p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-weight: 650;
+    }
+
+    .stage {
+      justify-self: end;
+      text-align: right;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+
+    .stage small {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-weight: 750;
+      text-transform: none;
+    }
+
+    .route-board {
+      grid-column: span 4;
+      padding: 20px;
+    }
+
+    .route-map {
+      grid-column: span 8;
+      min-height: 520px;
+      background:
+        linear-gradient(155deg, rgba(255,255,255,.28), rgba(255,250,242,.9)),
+        url("https://assets.primaverasound.com/psweb/q1pmyt32p9r11vw31nyr_1779892577769.png") center / cover no-repeat;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .route-map::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 78% 18%, rgba(182,228,77,.55), transparent 18%),
+        radial-gradient(circle at 31% 64%, rgba(106,169,255,.34), transparent 20%),
+        linear-gradient(120deg, transparent 0 48%, rgba(255,123,172,.25) 48% 56%, transparent 56%);
+      pointer-events: none;
+    }
+
+    .map-legend {
+      position: absolute;
+      left: 14px;
+      top: 14px;
+      padding: 10px;
+      border: 2px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255,250,242,.9);
+      font-weight: 900;
+      z-index: 3;
+      max-width: 260px;
+    }
+
+    .route-svg {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .route-svg path {
+      fill: none;
+      stroke: var(--coral);
+      stroke-width: 3.4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      filter: drop-shadow(0 3px 0 rgba(22,22,22,.45));
+    }
+
+    .stage-node {
+      position: absolute;
+      z-index: 2;
+      transform: translate(-50%, -50%);
+      border: 2px solid var(--line);
+      border-radius: 999px;
+      background: white;
+      min-width: 34px;
+      min-height: 34px;
+      padding: 7px 10px;
+      box-shadow: 4px 5px 0 var(--line);
+      font-size: 12px;
+      font-weight: 950;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .stage-node.active {
+      background: var(--green);
+      color: var(--ink);
+      transform: translate(-50%, -50%) scale(1.08);
+    }
+
+    .stage-node.priority {
+      background: var(--pink);
+      color: white;
+    }
+
+    .route-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .route-chip {
+      border: 2px solid var(--line);
+      border-radius: 999px;
+      background: white;
+      padding: 8px 10px;
+      font-size: 12px;
+      font-weight: 950;
+      cursor: pointer;
+    }
+
+    .route-chip[aria-pressed="true"] {
+      background: var(--ink);
+      color: white;
+    }
+
+    .route-detail h3 {
+      margin: 0 0 10px;
+      font-size: 28px;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .route-detail p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-weight: 760;
+    }
+
+    .route-stops {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .route-stops li {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      padding: 9px 10px;
+      border: 2px solid rgba(22,22,22,.18);
+      border-radius: 8px;
+      background: rgba(255,255,255,.72);
+      font-weight: 900;
+    }
+
+    .route-stops small {
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .route-stops b {
+      display: block;
+      line-height: 1.1;
+    }
+
+    .route-stops em {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-style: normal;
+      font-weight: 780;
+    }
+
+    .route-stops time {
+      display: block;
+      margin-top: 4px;
+      color: #42586b;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .tactic-grid, .song-grid, .packing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .packing-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .tactic, .song-card, .pack-card {
+      padding: 18px;
+    }
+
+    .tactic h3, .song-card h3, .pack-card h3 {
+      margin: 0 0 10px;
+      font-size: 22px;
+      line-height: 1.05;
+    }
+
+    .tactic ul, .song-card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .tactic li, .song-card li { margin: 7px 0; }
+
+    .checklist {
+      display: grid;
+      gap: 9px;
+      margin-top: 12px;
+    }
+
+    .check {
+      display: grid;
+      grid-template-columns: 22px 1fr;
+      gap: 9px;
+      align-items: start;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .check input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--coral);
+      margin-top: 2px;
+    }
+
+    .check small {
+      display: block;
+      margin-top: 2px;
+      color: #8a8580;
+      font-weight: 750;
+    }
+
+    .rec-row {
+      display: grid;
+      grid-template-columns: 170px 1fr 200px;
+      gap: 14px;
+      padding: 15px 18px;
+      border-bottom: 1px solid rgba(22,22,22,.18);
+      align-items: center;
+    }
+
+    .rec-row:last-child { border-bottom: 0; }
+
+    .rec-row strong { font-size: 20px; }
+    .rec-row p { margin: 0; color: var(--muted); font-weight: 700; }
+
+    .source {
+      padding: 20px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .source a { font-weight: 900; }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 900px) {
+      body { padding-bottom: 76px; }
+      .shell { width: min(100% - 24px, 680px); }
+      .nav {
+        top: auto;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        transform: none;
+        align-items: stretch;
+        border-left: 0;
+        border-right: 0;
+        border-bottom: 0;
+        border-radius: 18px 18px 0 0;
+        padding: 8px 8px 10px;
+      }
+      .brand { display: none; }
+      .nav-links {
+        width: 100%;
+        justify-content: space-between;
+        gap: 4px;
+        padding-bottom: 2px;
+      }
+      .nav-links a {
+        flex: 1 0 auto;
+        padding: 9px 8px;
+        text-align: center;
+        font-size: 11px;
+      }
+      .section-head { display: block; }
+      .section-head p { margin-top: 10px; }
+      .summary-card, .route-board, .route-map { grid-column: 1 / -1; }
+      .summary-card {
+        grid-column: span 6;
+        min-height: auto;
+        padding: 14px;
+      }
+      .summary-card strong { font-size: 30px; }
+      .slot, .rec-row {
+        grid-template-columns: 1fr;
+        gap: 7px;
+      }
+      .route-map {
+        min-height: 390px;
+        order: 1;
+      }
+      .route-board { order: 2; }
+      .stage-node {
+        min-width: 30px;
+        min-height: 30px;
+        padding: 6px 8px;
+        font-size: 10px;
+        box-shadow: 3px 4px 0 var(--line);
+      }
+      .map-legend {
+        max-width: 210px;
+        font-size: 12px;
+      }
+      .stage { justify-self: start; text-align: left; }
+      .tactic-grid, .song-grid, .packing-grid { grid-template-columns: 1fr; }
+      .hero {
+        min-height: 70vh;
+        padding: 18px 0 28px;
+        align-items: end;
+      }
+      .hero-copy { padding-top: 9vh; }
+      .hero p { font-size: 17px; }
+      .hero-actions { gap: 8px; }
+      .action {
+        padding: 10px 13px;
+        box-shadow: 3px 4px 0 var(--line);
+      }
+      h1 { font-size: clamp(42px, 14vw, 72px); }
+      h2 { font-size: clamp(28px, 10vw, 42px); }
+      section { padding: 38px 0; }
+    }
+
+    @media (max-width: 560px) {
+      .summary-card { grid-column: span 6; }
+      .slot { padding: 14px; }
+      .day-title {
+        display: block;
+      }
+      .day-title span + span {
+        display: block;
+        margin-top: 5px;
+        font-size: 12px;
+      }
+      .route-map { min-height: 340px; }
+      .stage-node {
+        font-size: 9px;
+        padding: 5px 7px;
+      }
+      .map-legend {
+        left: 10px;
+        top: 10px;
+        max-width: 180px;
+      }
+      .route-detail h3 { font-size: 24px; }
+      .route-chip { font-size: 11px; }
+      .nav-links a { min-width: 58px; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav" aria-label="Planner navigation">
+    <div class="brand">PS26 Planner</div>
+    <div class="nav-links">
+      <a href="#schedule">Schedule</a>
+      <a href="#routes">Routes</a>
+      <a href="#breaks">Breaks</a>
+      <a href="#packing">Pack</a>
+      <a href="#recs">Free time</a>
+      <a href="#songs">Songs</a>
+      <a href="#sources">Info</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="shell hero-copy">
+      <div class="eyebrow">Barcelona 2026 | Parc del Forum</div>
+      <h1>Your Primavera field guide</h1>
+      <p>A practical, conflict-aware planner for your saved artists: when to move, when to eat, where bathroom breaks make sense, and which songs to know before the crowd takes over.</p>
+      <div class="hero-actions">
+        <a class="action primary" href="#schedule">Open schedule</a>
+        <a class="action" href="https://www.primaverasound.com/es/barcelona/map" target="_blank" rel="noreferrer">Official map</a>
+        <a class="action" href="https://www.primaverasound.com/es/barcelona/lineup" target="_blank" rel="noreferrer">Official lineup</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="schedule">
+      <div class="shell">
+        <div class="section-head">
+          <h2>Schedule</h2>
+          <p>Official set windows are shown in Barcelona time. The xx and Gorillaz are marked as protected priority sets; everything else can be treated as flexible.</p>
+        </div>
+        <div class="grid">
+          <article class="panel summary-card" style="background: var(--pink); color: white;">
+            <strong>22</strong>
+            <span style="color: white;">artists from your saved lineup</span>
+          </article>
+          <article class="panel summary-card" style="background: var(--blue);">
+            <strong>4</strong>
+            <span>festival nights planned</span>
+          </article>
+          <article class="panel summary-card" style="background: var(--green);">
+            <strong>3</strong>
+            <span>big collision zones to handle</span>
+          </article>
+          <article class="panel summary-card" style="background: var(--yellow);">
+            <strong>8</strong>
+            <span>break windows worth protecting</span>
+          </article>
+        </div>
+
+        <div class="toolbar" role="tablist" aria-label="Festival days">
+          <button class="day-btn" role="tab" aria-selected="true" data-day="wed">Wed 3</button>
+          <button class="day-btn" role="tab" aria-selected="false" data-day="thu">Thu 4</button>
+          <button class="day-btn" role="tab" aria-selected="false" data-day="fri">Fri 5</button>
+          <button class="day-btn" role="tab" aria-selected="false" data-day="sat">Sat 6</button>
+        </div>
+
+        <div class="panel timeline-wrap">
+          <div class="day-panel active" id="day-wed">
+            <div class="day-title"><span>Wednesday opening run</span><span>Low stress warm-up</span></div>
+            <div class="timeline"></div>
+          </div>
+          <div class="day-panel" id="day-thu">
+            <div class="day-title"><span>Thursday</span><span>First real walking puzzle</span></div>
+            <div class="timeline"></div>
+          </div>
+          <div class="day-panel" id="day-fri">
+            <div class="day-title"><span>Friday</span><span>The Cure night</span></div>
+            <div class="timeline"></div>
+          </div>
+          <div class="day-panel" id="day-sat">
+            <div class="day-title"><span>Saturday into Sunday</span><span>Endurance mode</span></div>
+            <div class="timeline"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="routes">
+      <div class="shell">
+        <div class="section-head">
+          <h2>Routes</h2>
+          <p>The map puts Estrella Damm and Revolut at the far end, Cupra/Schwarzkopf/Port closer to the entrance, and Plenitude near the exit corridor.</p>
+        </div>
+        <div class="grid">
+          <aside class="panel route-map" aria-label="Interactive festival route map">
+            <div class="map-legend">Tap a route or stage pin to update the path.</div>
+            <svg class="route-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+              <path id="routePath" d=""></path>
+            </svg>
+            <div id="stageNodes"></div>
+          </aside>
+          <article class="panel route-board">
+            <div class="route-chip-row" id="routeChips"></div>
+            <div class="route-detail" id="routeDetail"></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="breaks">
+      <div class="shell">
+        <div class="section-head">
+          <h2>Food and bathroom tactics</h2>
+          <p>Designed around your actual gaps, not abstract festival advice.</p>
+        </div>
+        <div class="tactic-grid">
+          <article class="panel tactic">
+            <h3>Best food windows</h3>
+            <ul>
+              <li>Wed 21:15-21:55: quick dinner before Wet Leg.</li>
+              <li>Fri 20:50-21:00: only a snack, not dinner, before Addison Rae.</li>
+              <li>Sat 18:45-21:15: proper meal window before the final run.</li>
+            </ul>
+          </article>
+          <article class="panel tactic">
+            <h3>Bathroom windows</h3>
+            <ul>
+              <li>Thu after Alex G, before choosing Mac DeMarco/Doja positioning.</li>
+              <li>Fri immediately after Addison Rae, then stay put for The Cure.</li>
+              <li>Sat after The xx or after Gorillaz, depending on your Peggy Gou stamina.</li>
+            </ul>
+          </article>
+          <article class="panel tactic">
+            <h3>Crowd tactics</h3>
+            <ul>
+              <li>For The Cure, enter Estrella Damm before Addison Rae ends if close view matters.</li>
+              <li>For Doja Cat and Gorillaz, treat the final 20 minutes before set time as too late.</li>
+              <li>For Peggy Gou, arrive with water already handled; Cupra will be a late-night magnet.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="recs">
+      <div class="shell">
+        <div class="section-head">
+          <h2>Free time picks</h2>
+          <p>Recommended nearby artists or low-friction moves during gaps in your plan.</p>
+        </div>
+        <div class="toolbar" aria-label="Recommendation filters">
+          <button class="chip" aria-pressed="true" data-rec="all">All</button>
+          <button class="chip" aria-pressed="false" data-rec="nearby">Nearby</button>
+          <button class="chip" aria-pressed="false" data-rec="dance">Dance</button>
+          <button class="chip" aria-pressed="false" data-rec="recovery">Recovery</button>
+        </div>
+        <div class="panel" id="recList"></div>
+      </div>
+    </section>
+
+    <section id="packing">
+      <div class="shell">
+        <div class="section-head">
+          <h2>To bring</h2>
+          <p>A practical checklist based on the official entry conditions and current local Primavera guidance. Keep the bag small and avoid anything security can treat as dangerous.</p>
+        </div>
+        <div class="packing-grid" id="packingGrid"></div>
+      </div>
+    </section>
+
+    <section id="songs">
+      <div class="shell">
+        <div class="section-head">
+          <h2>Must-know songs</h2>
+          <p>No lyric homework here, just the titles you want in your bones before the set starts.</p>
+        </div>
+        <div class="song-grid" id="songGrid"></div>
+      </div>
+    </section>
+
+    <section id="sources">
+      <div class="shell">
+        <div class="panel source">
+          Built from the official Primavera Sound Barcelona <a href="https://www.primaverasound.com/es/barcelona/lineup" target="_blank" rel="noreferrer">lineup</a>, <a href="https://www.primaverasound.com/es/barcelona/map" target="_blank" rel="noreferrer">map</a>, <a href="https://assets.primaverasound.com/psb/docs/condicionesEntradas_en.html" target="_blank" rel="noreferrer">ticket conditions</a> and <a href="https://www.primaverasound.com/en/barcelona/primavera-sound-barcelona-frequently-asked-questions-faqs" target="_blank" rel="noreferrer">FAQ</a>, cross-checked on May 31, 2026. Schedule starts and durations come from the live Primavera lineup data behind the official site. Packing guidance also uses <a href="https://barcelonaurbana.com/en/blog/primavera-sound-barcelona-guide/" target="_blank" rel="noreferrer">Barcelona Urbana's 2026 practical guide</a> for local on-the-ground advice.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const schedule = {
+      wed: [
+        ["20:15", "21:15", "Guitarricadelafuente", "Parc del Forum", "Opening-day focus. You have 40 minutes before Wet Leg, enough for food, water, and a calm reset.", ["arrival"]],
+        ["21:55", "23:05", "Wet Leg", "Parc del Forum", "Easy same-area transition. Fine to arrive late if dinner runs long.", ["food"]]
+      ],
+      thu: [
+        ["18:20", "19:20", "Blood Orange", "Revolut", "Conflicts with Men I Trust from 18:50. If you want both, leave around 18:45 and accept a partial Men I Trust.", ["conflict"]],
+        ["18:50", "19:40", "Men I Trust", "Cupra", "Flexible set. Cupra is a meaningful walk from Revolut, so late arrival is expected if you start at Blood Orange.", ["conflict", "walk"]],
+        ["19:35", "20:35", "Ravyn Lenae", "Estrella Damm", "Overlaps the end of Men I Trust. Best if you are already in the main-stage area.", ["walk"]],
+        ["20:50", "21:50", "Alex G", "Revolut", "You have only 5 minutes before Mac DeMarco starts, so decide whether Alex G or Mac gets the full set.", ["anchor"]],
+        ["21:55", "22:55", "Mac DeMarco", "Occident", "Flexible bridge before Doja. Leave by 22:55 latest; earlier if you want a stronger Doja position.", ["conflict", "walk"]],
+        ["23:30", "01:10", "Doja Cat", "Revolut", "Big crowd set. Not a top priority, so it is okay to arrive late after Mac DeMarco if comfort matters.", ["anchor"]]
+      ],
+      fri: [
+        ["17:20", "18:00", "Las Petunias", "Port", "Early, entrance-side start. You have 50 minutes before Buscabulla, plenty for a first food/water pass.", ["arrival"]],
+        ["18:50", "19:45", "Buscabulla", "Cupra", "Comfortable move from Port to Cupra. You only have 5 minutes before Rilo Kiley, so leave before the final song if needed.", ["nearby"]],
+        ["19:50", "20:50", "Rilo Kiley", "Occident", "Flexible. If Addison Rae matters more, leave around 20:35-20:40 for Revolut.", ["walk"]],
+        ["21:00", "22:00", "Addison Rae", "Revolut", "Short hop into the main-stage zone before The Cure. You have 15 minutes after this set.", ["anchor"]],
+        ["22:15", "00:45", "The Cure", "Estrella Damm", "Long set. Eat before Addison or accept a late meal after midnight.", ["anchor"]],
+        ["01:00", "02:30", "Skrillex", "Revolut", "Main-stage neighbor move after The Cure. Hydrate before pushing forward.", ["dance"]]
+      ],
+      sat: [
+        ["17:10", "17:50", "Jimena Amarillo", "Cupra", "Gentle start near several food and service points. You have 10 minutes before Depresion Sonora.", ["arrival"]],
+        ["18:00", "18:45", "Depresion Sonora", "Schwarzkopf", "Short practical move from Cupra. After this, you have a huge dinner/reset window until 21:15.", ["nearby"]],
+        ["21:15", "22:15", "rusowsky", "Cupra", "Flexible. After this, use the long gap for food, bathroom, water, and the walk toward Revolut.", ["food"]],
+        ["23:40", "00:55", "The xx", "Revolut", "Top priority. Be at Revolut by about 23:20. Do not plan MARINA unless you are willing to miss the end of The xx.", ["priority"]],
+        ["00:40", "01:40", "MARINA", "Occident", "Direct conflict with The xx and Gorillaz. Since The xx/Gorillaz are top priority, this is a skip or tiny cameo only.", ["conflict", "walk"]],
+        ["01:15", "02:45", "Gorillaz", "Estrella Damm", "Top priority, but planned early exit around 02:25-02:30 if you want a relaxed water/bathroom stop before Peggy Gou.", ["priority"]],
+        ["03:40", "04:30", "Ninajirachi", "Port", "Optional cameo only. It overlaps your Peggy Gou positioning and adds a Port-to-Cupra walk.", ["dance", "walk"]],
+        ["04:15", "05:45", "Peggy Gou", "Cupra", "Final dance priority. Leave Gorillaz a little early, skip the Port detour if tired, and get to Cupra by about 04:00.", ["dance", "priority"]]
+      ]
+    };
+
+    const stages = {
+      entrance: { label: "Entrance", x: 84, y: 86, hint: "Arrive / exit" },
+      port: { label: "Port", x: 15, y: 57, hint: "Entrance-side stage" },
+      schwarzkopf: { label: "Schwarzkopf", x: 25, y: 68, hint: "Backstage zone" },
+      cupra: { label: "Cupra", x: 39, y: 52, hint: "Middle-left dance/pop zone" },
+      occident: { label: "Occident", x: 58, y: 76, hint: "Auditori side" },
+      plenitude: { label: "Plenitude", x: 72, y: 42, hint: "Exit-corridor side" },
+      revolut: { label: "Revolut", x: 83, y: 26, hint: "Main-stage end" },
+      estrella: { label: "Estrella", x: 72, y: 18, hint: "Main-stage end" }
+    };
+
+    const routes = [
+      {
+        title: "Priority night",
+        text: "Protect The xx from 23:40-00:55, then Gorillaz from 01:15 until roughly 02:25-02:30. After that, pivot toward Peggy Gou at Cupra.",
+        stops: ["cupra", "revolut", "estrella", "cupra"],
+        artists: ["rusowsky / reset", "The xx", "Gorillaz", "Peggy Gou"],
+        times: ["21:15-22:15", "23:40-00:55", "01:15-02:30 planned exit", "04:15-05:45"]
+      },
+      {
+        title: "Thu first fork",
+        text: "Blood Orange at Revolut and Men I Trust at Cupra overlap. Pick one full set, or do Blood Orange first 25 minutes then accept a back-half Men I Trust view.",
+        stops: ["entrance", "revolut", "cupra"],
+        artists: ["arrival", "Blood Orange", "Men I Trust"],
+        times: ["before 18:20", "18:20-19:20", "18:50-19:40"]
+      },
+      {
+        title: "Thu late run",
+        text: "Alex G at Revolut to Mac DeMarco at Occident to Doja Cat at Revolut is doable, but it is a boomerang. Use Mac as a partial set if Doja position matters.",
+        stops: ["revolut", "occident", "revolut"],
+        artists: ["Alex G", "Mac DeMarco", "Doja Cat"],
+        times: ["20:50-21:50", "21:55-22:55", "23:30-01:10"]
+      },
+      {
+        title: "Fri main-stage lock",
+        text: "Rilo Kiley to Addison Rae to The Cure is a steady westward push into the main area. Food before 20:45 keeps the night calm.",
+        stops: ["port", "cupra", "occident", "revolut", "estrella"],
+        artists: ["Las Petunias", "Buscabulla", "Rilo Kiley", "Addison Rae", "The Cure"],
+        times: ["17:20-18:00", "18:50-19:45", "19:50-20:50", "21:00-22:00", "22:15-00:45"]
+      },
+      {
+        title: "Sat warm-up",
+        text: "Cupra/Schwarzkopf early, meal reset, then Cupra to Revolut for The xx. Avoid unnecessary returns to the entrance once this starts.",
+        stops: ["cupra", "schwarzkopf", "cupra", "revolut"],
+        artists: ["Jimena Amarillo", "Depresion Sonora", "rusowsky / dinner", "The xx"],
+        times: ["17:10-17:50", "18:00-18:45", "21:15-22:15", "23:40-00:55"]
+      },
+      {
+        title: "After Gorillaz",
+        text: "Gorillaz to Peggy Gou is the clean route. Ninajirachi is possible as a tiny cameo, but it adds a Port-to-Cupra walk right when energy is low.",
+        stops: ["estrella", "cupra"],
+        artists: ["Gorillaz", "Peggy Gou"],
+        times: ["01:15-02:30 planned exit", "04:15-05:45"]
+      }
+    ];
+
+    const recs = [
+      ["Thu 22:00-23:20", "Mac DeMarco", "Your planned bridge between Alex G and Doja Cat. Keep it partial if Revolut position matters.", "nearby"],
+      ["Fri 17:55-18:30", "NewDad", "If you arrive early and want a gentle warm-up before Las Petunias/Buscabulla, this is low-risk.", "nearby"],
+      ["Fri 23:00-01:00", "Water, bathroom, late food", "After The Cure starts, do not plan a real break until after the set. This is the night to preload essentials.", "recovery"],
+      ["Sat 18:45-21:00", "Dinner plus merch/map reset", "Your cleanest long break of the weekend. Use it deliberately.", "recovery"],
+      ["Sat 02:30-04:00", "Water, bathroom, Cupra positioning", "Leave Gorillaz a little early if Peggy Gou is the late-night target. This is your decompression and movement window.", "recovery"],
+      ["Sat 03:40-04:30", "Ninajirachi cameo", "Only do this if you still have legs. Peggy Gou is cleaner if you skip the Port detour.", "dance"]
+    ];
+
+    const packing = [
+      {
+        title: "Must have",
+        items: [
+          ["ID or passport", "Official conditions say you may need to show it."],
+          ["Ticket/card and wristband", "Keep both in good condition."],
+          ["Phone with AccessTicket/app ready", "Screenshot key info before the network gets crowded."],
+          ["Debit/credit card", "Useful for cashless bars and backup payments."]
+        ]
+      },
+      {
+        title: "Comfort",
+        items: [
+          ["Comfortable trainers", "Concrete venue, very long nights."],
+          ["Light jacket", "Seafront gets colder between 03:00 and 06:00."],
+          ["High-fidelity earplugs", "Especially for electronic and main-stage volume."],
+          ["Sunglasses or cap", "Afternoon sun exposure is real."]
+        ]
+      },
+      {
+        title: "Battery and body",
+        items: [
+          ["Fully charged power bank", "GPS, photos and the app drain fast."],
+          ["Charging cable", "Short cable is easiest in a small bag."],
+          ["Sunscreen stick or small tube", "Avoid aerosols."],
+          ["Small snacks or food", "Local 2026 guidance says food is allowed, but keep it simple."]
+        ]
+      },
+      {
+        title: "Gate-safe notes",
+        items: [
+          ["Small bag only", "Official rules warn against large suitcases, bags and backpacks."],
+          ["Compact umbrella or rain jacket", "Use compact, non-sharp, easy-to-pack rain gear."],
+          ["No bottles or cans", "Official conditions list bottles and cans as not permitted."],
+          ["No pro cameras, drones or lasers", "Leave detachable-lens gear and drones at home."]
+        ]
+      }
+    ];
+
+    const songs = {
+      "The xx": ["Intro", "Crystalised", "Angels", "On Hold"],
+      "Gorillaz": ["Feel Good Inc.", "Clint Eastwood", "DARE", "On Melancholy Hill"],
+      "The Cure": ["Just Like Heaven", "Friday I'm in Love", "Boys Don't Cry", "A Forest"],
+      "Addison Rae": ["Diet Pepsi", "Headphones On", "Fame Is a Gun", "Aquamarine"],
+      "Skrillex": ["Bangarang", "Rumble", "Where Are U Now", "Scary Monsters and Nice Sprites"],
+      "Doja Cat": ["Say So", "Paint The Town Red", "Woman", "Agora Hills"],
+      "Mac DeMarco": ["Chamber of Reflection", "My Kind of Woman", "Salad Days", "Freaking Out the Neighborhood"],
+      "Peggy Gou": ["It Goes Like Nanana", "Starry Night", "I Go", "Lobster Telephone"],
+      "Wet Leg": ["Chaise Longue", "Wet Dream", "Angelica", "Ur Mum"],
+      "Ravyn Lenae": ["Love Me Not", "Sticky", "Skin Tight", "Dream Girl"],
+      "MARINA": ["Primadonna", "How to Be a Heartbreaker", "Bubblegum Bitch", "Froot"]
+    };
+
+    const tagLabels = {
+      conflict: "conflict",
+      walk: "long walk",
+      food: "food window",
+      anchor: "anchor set",
+      priority: "top priority",
+      dance: "dance",
+      arrival: "arrival",
+      nearby: "nearby"
+    };
+
+    function renderTimeline(day) {
+      const panel = document.querySelector(`#day-${day} .timeline`);
+      panel.innerHTML = schedule[day].map(([start, end, artist, stage, note, tags]) => `
+        <article class="slot">
+          <div class="time">${start}<small>to ${end}</small></div>
+          <div>
+            <h3 class="artist">${artist}</h3>
+            <p>${note}</p>
+            <div class="meta">${tags.map(tag => `<span class="tag ${tag}">${tagLabels[tag]}</span>`).join("")}</div>
+          </div>
+          <div class="stage">${stage}<small>Barcelona time</small></div>
+        </article>
+      `).join("");
+    }
+
+    Object.keys(schedule).forEach(renderTimeline);
+
+    document.querySelectorAll(".day-btn").forEach(button => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".day-btn").forEach(btn => btn.setAttribute("aria-selected", "false"));
+        document.querySelectorAll(".day-panel").forEach(panel => panel.classList.remove("active"));
+        button.setAttribute("aria-selected", "true");
+        document.querySelector(`#day-${button.dataset.day}`).classList.add("active");
+      });
+    });
+
+    let activeRoute = 0;
+
+    function routePath(stops) {
+      return stops.map((key, index) => {
+        const stage = stages[key];
+        return `${index ? "L" : "M"} ${stage.x} ${stage.y}`;
+      }).join(" ");
+    }
+
+    function renderRouteMap(index = activeRoute) {
+      activeRoute = index;
+      const route = routes[activeRoute];
+      const activeStops = new Set(route.stops);
+      document.querySelector("#routePath").setAttribute("d", routePath(route.stops));
+      document.querySelector("#routeChips").innerHTML = routes.map((item, routeIndex) => `
+        <button class="route-chip" type="button" data-route="${routeIndex}" onclick="renderRouteMap(${routeIndex})" aria-pressed="${routeIndex === activeRoute}">
+          ${item.title}
+        </button>
+      `).join("");
+      document.querySelector("#stageNodes").innerHTML = Object.entries(stages).map(([key, stage]) => `
+        <button class="stage-node ${activeStops.has(key) ? "active" : ""} ${key === "revolut" || key === "estrella" ? "priority" : ""}"
+          type="button"
+          data-stage="${key}"
+          onclick="selectRouteForStage('${key}')"
+          style="left: ${stage.x}%; top: ${stage.y}%"
+          title="${stage.hint}">
+          ${stage.label}
+        </button>
+      `).join("");
+      document.querySelector("#routeDetail").innerHTML = `
+        <h3>${route.title}</h3>
+        <p>${route.text}</p>
+        <ul class="route-stops">
+          ${route.stops.map((key, stopIndex) => `
+            <li>
+              <span>
+                <b>${route.artists[stopIndex]}</b>
+                <em>${stages[key].label} stage</em>
+                <time>${route.times[stopIndex]}</time>
+              </span>
+              <small>${stopIndex + 1}/${route.stops.length}</small>
+            </li>
+          `).join("")}
+        </ul>
+      `;
+
+    }
+
+    function selectRouteForStage(stageKey) {
+      const exactRoute = routes.findIndex(item => item.stops.includes(stageKey) && item.stops.length <= 2);
+      const routeIndex = exactRoute >= 0 ? exactRoute : routes.findIndex(item => item.stops.includes(stageKey));
+      if (routeIndex >= 0) renderRouteMap(routeIndex);
+    }
+
+    renderRouteMap();
+
+    function renderRecs(filter = "all") {
+      document.querySelector("#recList").innerHTML = recs
+        .filter(([, , , type]) => filter === "all" || type === filter)
+        .map(([time, title, text, type]) => `
+          <article class="rec-row">
+            <strong>${time}</strong>
+            <div><strong>${title}</strong><p>${text}</p></div>
+            <span class="tag ${type}">${tagLabels[type]}</span>
+          </article>
+        `).join("");
+    }
+
+    renderRecs();
+
+    document.querySelectorAll("[data-rec]").forEach(button => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll("[data-rec]").forEach(btn => btn.setAttribute("aria-pressed", "false"));
+        button.setAttribute("aria-pressed", "true");
+        renderRecs(button.dataset.rec);
+      });
+    });
+
+    document.querySelector("#packingGrid").innerHTML = packing.map(group => `
+      <article class="panel pack-card">
+        <h3>${group.title}</h3>
+        <div class="checklist">
+          ${group.items.map(([item, note], index) => {
+            const id = `pack-${group.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-${index}`;
+            return `<label class="check" for="${id}">
+              <input id="${id}" type="checkbox" data-pack-id="${id}">
+              <span>${item}<small>${note}</small></span>
+            </label>`;
+          }).join("")}
+        </div>
+      </article>
+    `).join("");
+
+    document.querySelectorAll("[data-pack-id]").forEach(input => {
+      input.checked = localStorage.getItem(input.dataset.packId) === "true";
+      input.addEventListener("change", () => {
+        localStorage.setItem(input.dataset.packId, input.checked ? "true" : "false");
+      });
+    });
+
+    document.querySelector("#songGrid").innerHTML = Object.entries(songs).map(([artist, tracks]) => `
+      <article class="panel song-card">
+        <h3>${artist}</h3>
+        <ul>${tracks.map(track => `<li>${track}</li>`).join("")}</ul>
+      </article>
+    `).join("");
+  </script>
+</body>
+</html>
